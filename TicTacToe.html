@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToe</title>
+</head>
+<body>
+<div style="text-align: center" id="broadscreen">
+</div>
+<br>
+<br>
+<div>
+    <p align="center">
+        <output id="out"></output>
+    </p>
+    <p align="center">
+        Turn:&#160
+        <output id="turn"></output>
+    </p>
+    <p align="center">x<input id="x" type="number" placeholder="Max3" value="1"></p>
+    <p align="center">y<input id="y" type="number" placeholder="Max3" value="1"></p>
+</div>
+<script>
+
+
+    let turn = 2;
+    let tr1 = [".", ".", "."];
+    let tr2 = [".", ".", "."];
+    let tr3 = [".", ".", "."];
+    let broad = [tr1, tr2, tr3];
+    let whoTurn = "0";
+    display();
+    setTurn();
+
+
+    function isWin() {
+        for (let i = 0; i < 3; i++) {
+            if (
+                (broad[i][0] === broad[i][1])
+                && (broad[i][1] === broad[i][2])
+            ) {
+                if (broad[i][0] === "X") {
+                    whoTurn = "X";
+                }
+                if (broad[i][0] === "O") {
+                    whoTurn = "O";
+                }
+            }
+            if (
+                (broad[0][i] === broad[1][i])
+                && (broad[1][i] === broad[2][i])
+            ) {
+                if (broad[0][1] === "X") {
+                    whoTurn = "X";
+                }
+                if (broad[0][i] === "O") {
+                    whoTurn = "O";
+                }
+                if (((broad[0][0] === broad[1][1])
+                    && (broad[1][1] === broad[2][2]))
+                    ||
+                    ((broad[0][2] === broad[1][1])
+                        && (broad[1][1] === broad[2][0]))) {
+                    if (broad[1][1] === "X") {
+                        whoTurn = "X";
+                    }
+                    if (broad[1][1] === "O") {
+                        whoTurn = "O";
+                    }
+                }
+            }
+        }
+    }
+
+    function display() {
+        let display = "";
+        for (i = 0; i < 3; i++) {
+            display += "<br><br><br>";
+            for (j = 0; j < 3; j++) {
+                display += "&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160";
+                display += broad[i][j];
+            }
+        }
+        document.getElementById("broadscreen").innerHTML = display;
+    }
+
+    function setTurn() {
+
+        if ((turn % 2) === 0) {
+            document.getElementById("out").innerHTML = "PlayerX";
+            whoTurn = "X";
+        } else {
+            document.getElementById("out").innerHTML = "playerO";
+            whoTurn = "O";
+        }
+        document.getElementById("turn").innerHTML = (turn - 1);
+        turn++;
+        document.getElementById("x").value = 1;
+        document.getElementById("y").value = 1;
+    }
+
+    function setInput() {
+        let x = Number(document.getElementById("x").value) - 1;
+        let y = Number(document.getElementById("y").value) - 1;
+        if (x > 4) {
+            document.getElementById("x").value = 1;
+        }
+        if (y > 4) {
+            document.getElementById("y").value = 1;
+        }
+        broad[x][y] = whoTurn;
+    }
+
+    function refresh() {
+
+    }
+
+function pressed(){
+        if(event.key === "Enter"){
+    setInput();
+    display();
+    isWin();
+    setTurn();
+}}
+    document.getElementById("y").addEventListener("keydown",pressed);
+    document.getElementById("x").addEventListener("keydown",pressed);
+
+
+</script>
+</body>
+</html>
