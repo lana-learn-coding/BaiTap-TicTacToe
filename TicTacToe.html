@@ -24,7 +24,7 @@
 
 
     let turn = 2;
-    let tr1 = [".", ".", "."];
+    let tr1 = ["X", "X", "X"];
     let tr2 = [".", ".", "."];
     let tr3 = [".", ".", "."];
     let broad = [tr1, tr2, tr3];
@@ -34,16 +34,17 @@
 
 
     function isWin() {
+        let win = 0;
         for (let i = 0; i < 3; i++) {
             if (
                 (broad[i][0] === broad[i][1])
                 && (broad[i][1] === broad[i][2])
             ) {
                 if (broad[i][0] === "X") {
-                    whoTurn = "X";
+                    win = 1;
                 }
                 if (broad[i][0] === "O") {
-                    whoTurn = "O";
+                    win = 2;
                 }
             }
             if (
@@ -51,25 +52,33 @@
                 && (broad[1][i] === broad[2][i])
             ) {
                 if (broad[0][1] === "X") {
-                    whoTurn = "X";
+                    win = 1;
                 }
                 if (broad[0][i] === "O") {
-                    whoTurn = "O";
+                    win = 2;
                 }
-                if (((broad[0][0] === broad[1][1])
-                    && (broad[1][1] === broad[2][2]))
-                    ||
-                    ((broad[0][2] === broad[1][1])
-                        && (broad[1][1] === broad[2][0]))) {
-                    if (broad[1][1] === "X") {
-                        whoTurn = "X";
-                    }
-                    if (broad[1][1] === "O") {
-                        whoTurn = "O";
-                    }
+            }
+            if (((broad[0][0] === broad[1][1])
+                && (broad[1][1] === broad[2][2]))
+                ||
+                ((broad[0][2] === broad[1][1])
+                    && (broad[1][1] === broad[2][0]))){
+                if (broad[1][1] === "X"){
+                    win = 1;
+                    console.log(win)
+                }
+                if (broad[1][1] === "O") {
+                    win = 2;
                 }
             }
         }
+
+        if (win === 1) {
+            alert("thằng X thắng");
+        } else if (win === 2) {
+            alert("thằng Y thắng");
+        }
+        console.log(win);
     }
 
     function display() {
@@ -108,19 +117,21 @@
         if (y > 4) {
             document.getElementById("y").value = 1;
         }
-        broad[x][y] = whoTurn;
+        broad[y][x] = whoTurn;
     }
 
 
-function pressed(){
-        if(event.key === "Enter"){
-    setInput();
-    display();
-    isWin();
-    setTurn();
-}}
-    document.getElementById("y").addEventListener("keydown",pressed);
-    document.getElementById("x").addEventListener("keydown",pressed);
+    function pressed() {
+        if (event.key === "Enter") {
+            setInput();
+            display();
+            isWin();
+            setTurn();
+        }
+    }
+
+    document.getElementById("y").addEventListener("keydown", pressed);
+    document.getElementById("x").addEventListener("keydown", pressed);
 
 
 </script>
